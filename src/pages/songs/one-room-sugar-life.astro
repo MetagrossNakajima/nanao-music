@@ -1,0 +1,87 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import CallCategoryList from "../../components/CallCategoryList.astro"
+import PageHeader from "../../components/PageHeader.astro"
+import type { CallCategory } from "../../data/callTypes"
+import { resolveSong } from "../../data/songResolver"
+
+const song = resolveSong("one-room-sugar-life")
+const categories: CallCategory[] = [
+  {
+    id: "pre-chorus",
+    title: "冒頭サビ",
+    items: ["最後のフレーズ直前までクラップ👏"],
+  },
+  { id: "intro", title: "前奏", items: ["裏拍でHi-Hiコール"] },
+  {
+    id: "verse-1-a",
+    title: "1番Aメロ",
+    items: ["歌い出しからずっとクラップ👏"],
+  },
+  {
+    id: "poetry-1",
+    title: "1番ポエトリー",
+    items: ["ずっとクラップ👏"],
+  },
+  { id: "verse-1-b", title: "1番Bメロ", items: [] },
+  {
+    id: "chorus-1",
+    title: "1番サビ",
+    items: [
+      "MVと同じ手のダンスをやると楽しい",
+      "煽られるのでHey!!と叫ぶ（歌詞的にWow!!でもいいと思うが原曲を聴くとHey!!と聴こえる）",
+    ],
+  },
+  { id: "interlude", title: "間奏", items: ["裏拍でHi-Hiコール"] },
+  {
+    id: "poetry-2",
+    title: "2番ポエトリー",
+    items: ["歌い出しからずっとクラップ👏"],
+  },
+  { id: "verse-2-b", title: "2番Bメロ", items: [] },
+  {
+    id: "quiet-chorus",
+    title: "落ちサビ",
+    items: ["後半クラップ👏"],
+  },
+  {
+    id: "last-chorus",
+    title: "ラスサビ",
+    items: [
+      "MVと同じ手のダンスをやると楽しい",
+      "煽られるのでHey!!と叫ぶ（歌詞的にWow!!でもいいと思うが原曲を聴くとHey!!と聴こえる）",
+    ],
+  },
+  { id: "outro", title: "後奏", items: ["裏拍でHi-Hiコール"] },
+]
+const pageDescription = `${song.title}のコールまとめです。`
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicRecording",
+  name: song.title,
+  byArtist: {
+    "@type": "MusicGroup",
+    name: "ナナヲアカリ",
+  },
+}
+---
+
+<Layout
+  title={`${song.title} コールまとめ`}
+  description={pageDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <main class="mx-auto w-[min(760px,calc(100%-32px))] py-8 pb-18">
+    <nav>
+      <a
+        class="text-[17px] leading-[1.7] font-bold tracking-[0.02em] text-[#007f73] no-underline hover:underline"
+        href="/">公演一覧へ戻る</a
+      >
+    </nav>
+
+    <PageHeader eyebrow="コールまとめ" title={song.title} />
+
+    <CallCategoryList categories={categories} />
+  </main>
+</Layout>

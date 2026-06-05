@@ -1,6 +1,7 @@
 ---
 import type { Setlist } from "../data/setlistTypes"
 import { resolveSong } from "../data/songResolver"
+import { resolveSongPagePath } from "../data/songPagePaths"
 import Badge from "./Badge.astro"
 
 type Props = {
@@ -20,6 +21,7 @@ const tagLabels = {
       setlist.songs.map((song) => {
         const songNumber = song.position
         const songInfo = resolveSong(song.songId)
+        const songHref = resolveSongPagePath(song.songId)
 
         return (
           <li class="grid items-center gap-2 border-b border-[#e6e6e6] bg-white px-1 py-3.5 grid-cols-[24px_1fr_60px]">
@@ -27,7 +29,13 @@ const tagLabels = {
               {String(songNumber).padStart(2, "0")}
             </span>
             <span class="text-[17px] leading-[1.7] font-bold tracking-[0.02em]">
-              {songInfo.title}
+              {songHref ? (
+                <a class="text-[#007f73] no-underline hover:underline" href={songHref}>
+                  {songInfo.title}
+                </a>
+              ) : (
+                songInfo.title
+              )}
               {song.tags.length > 0 && (
                 <span class="ml-2.5 inline-flex flex-wrap gap-1.5 align-middle">
                   {song.tags.map((tag) => (
