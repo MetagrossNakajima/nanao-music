@@ -1,8 +1,16 @@
 export type SongTag = 'medley';
 
+export type Song = {
+	id: string;
+	title: string;
+	itunesPreviewUrl?: string;
+	itunesTrackUrl?: string;
+	youtubeVideoId?: string;
+};
+
 export type SongEntry = {
 	position: number;
-	title: string;
+	songId: string;
 	tags: SongTag[];
 };
 

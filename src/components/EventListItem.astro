@@ -4,6 +4,7 @@ import {
   formatEventFullDate,
   formatEventYear,
 } from "../data/formatters"
+import { resolveSong } from "../data/songResolver"
 import type { Setlist } from "../data/setlistTypes"
 
 type Props = {
@@ -15,7 +16,7 @@ const searchableText = [
   event.title,
   event.area,
   event.venue,
-  ...event.songs.map((song) => song.title),
+  ...event.songs.map((song) => resolveSong(song.songId).title),
 ]
   .join(" ")
   .toLowerCase()
