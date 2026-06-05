@@ -1,0 +1,78 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import Icon from "../../components/Icon.astro"
+import PageHeader from "../../components/PageHeader.astro"
+import SectionHeading from "../../components/SectionHeading.astro"
+import SongList from "../../components/SongList.astro"
+import setlists from "../../data/setlists.generated.json"
+import { formatEventFullDate } from "../../data/formatters"
+import type { Setlist } from "../../data/setlistTypes"
+
+export function getStaticPaths() {
+  return (setlists as Setlist[]).map((setlist) => ({
+    params: { id: String(setlist.id) },
+    props: { setlist },
+  }))
+}
+
+const { setlist } = Astro.props as { setlist: Setlist }
+---
+
+<Layout>
+  <main class="mx-auto w-[min(760px,calc(100%-32px))] py-8 pb-18">
+    <nav>
+      <a
+        class="text-[17px] leading-[1.7] font-bold tracking-[0.02em] text-[#007f73] no-underline hover:underline"
+        href="/">公演一覧へ戻る</a
+      >
+    </nav>
+
+    <PageHeader title={setlist.title} />
+
+    <section class="mt-6" aria-label="ライブ概要">
+      <div class="mb-3">
+        <SectionHeading>ライブ概要</SectionHeading>
+      </div>
+      <dl class="grid gap-2.5 border-t border-[#e6e6e6] p-3 md:grid-cols-2">
+        <div>
+          <dt
+            class="flex items-center gap-1.5 text-[16px] leading-[1.7] font-bold tracking-[0.02em] text-[#666]"
+          >
+            <Icon name="calendar" class="size-4 shrink-0" />
+            <span>日付</span>
+          </dt>
+          <dd
+            class="mt-1 text-[17px] leading-[1.7] font-normal tracking-[0.02em]"
+          >
+            {formatEventFullDate(setlist)}
+          </dd>
+        </div>
+        <div>
+          <dt
+            class="flex items-center gap-1.5 text-[16px] leading-[1.7] font-bold tracking-[0.02em] text-[#666]"
+          >
+            <Icon name="map-pin" class="size-4 shrink-0" />
+            <span>会場</span>
+          </dt>
+          <dd
+            class="mt-1 text-[17px] leading-[1.7] font-normal tracking-[0.02em]"
+          >
+            {setlist.venue || "会場未記録"}
+            {
+              setlist.area && (
+                <span class="text-[#666]">（{setlist.area}）</span>
+              )
+            }
+          </dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="mt-4.5" aria-label="セットリスト">
+      <div class="mb-4">
+        <SectionHeading>セットリスト</SectionHeading>
+      </div>
+      <SongList setlist={setlist} />
+    </section>
+  </main>
+</Layout>

@@ -1,11 +1,57 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro"
+import EventListItem from "../components/EventListItem.astro"
+import PageHeader from "../components/PageHeader.astro"
+import SearchPanel from "../components/SearchPanel.astro"
+import setlists from "../data/setlists.generated.json"
+import type { Setlist } from "../data/setlistTypes"
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const events = [...(setlists as Setlist[])].sort((a, b) => {
+  const aValue = a.date.year * 10000 + a.date.month * 100 + a.date.day
+  const bValue = b.date.year * 10000 + b.date.month * 100 + b.date.day
+  return bValue - aValue
+})
 ---
 
 <Layout>
-	<Welcome />
+  <main class="mx-auto w-[min(960px,calc(100%-32px))] py-10 pb-[72px]">
+    <PageHeader
+      title="ナナヲアカリ コール セトリまとめ"
+      lead="曲名・会場名で公演を検索できます。"
+      accent
+    />
+
+    <div class="my-7 mb-4.5">
+      <SearchPanel total={events.length} />
+    </div>
+
+    <section class="grid border-t border-[#e6e6e6]" aria-label="公演一覧">
+      {events.map((event) => <EventListItem event={event} />)}
+    </section>
+  </main>
+
+  <script>
+    const input = document.querySelector<HTMLInputElement>("#event-search")
+    const rows = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-event-row]"),
+    )
+    const count = document.querySelector<HTMLElement>("#result-count")
+
+    function updateResults() {
+      const query = input?.value.trim().toLowerCase() ?? ""
+      let visible = 0
+
+      for (const row of rows) {
+        const matches = !query || row.dataset.eventSearch?.includes(query)
+        row.hidden = !matches
+        if (matches) visible += 1
+      }
+
+      if (count) {
+        count.textContent = `${visible}公演を表示中`
+      }
+    }
+
+    input?.addEventListener("input", updateResults)
+  </script>
 </Layout>

@@ -1,0 +1,16 @@
+---
+type Props = {
+  tone?: "neutral" | "accent"
+}
+
+const { tone = "neutral" } = Astro.props
+
+const classes = {
+  neutral:
+    "rounded-full border border-[#e6e6e6] bg-white px-2.5 py-1 text-[14px] leading-[1.3] font-normal tracking-normal text-[#666]",
+  accent:
+    "rounded-full border border-[#dcefeb] bg-[#f0fbf8] px-[7px] py-0.5 text-[14px] leading-[1.3] font-bold tracking-normal text-[#007f73]",
+}
+---
+
+<span class={classes[tone]}><slot /></span>

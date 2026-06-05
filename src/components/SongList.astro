@@ -1,0 +1,40 @@
+---
+import type { Setlist } from "../data/setlistTypes"
+import Badge from "./Badge.astro"
+
+type Props = {
+  setlist: Setlist
+}
+
+const { setlist } = Astro.props
+
+const tagLabels = {
+  medley: "メドレー",
+}
+---
+
+<ol class="grid list-none gap-0 border-t border-[#e6e6e6] p-0">
+  {
+    setlist.songs.map((song) => {
+      const songNumber = song.position
+
+      return (
+        <li class="grid grid-cols-[58px_minmax(0,1fr)] items-center border-b border-[#e6e6e6] bg-white px-1 py-3.5">
+          <span class="text-[16px] leading-[1.7] font-bold tracking-[0.02em] text-[#777]">
+            {String(songNumber).padStart(2, "0")}
+          </span>
+          <span class="text-[17px] leading-[1.7] font-bold tracking-[0.02em]">
+            {song.title}
+            {song.tags.length > 0 && (
+              <span class="ml-2.5 inline-flex flex-wrap gap-1.5 align-middle">
+                {song.tags.map((tag) => (
+                  <Badge tone="accent">{tagLabels[tag]}</Badge>
+                ))}
+              </span>
+            )}
+          </span>
+        </li>
+      )
+    })
+  }
+</ol>

@@ -1,0 +1,38 @@
+---
+type Props = {
+  eyebrow?: string
+  title: string
+  lead?: string
+  accent?: boolean
+}
+
+const { eyebrow, title, lead, accent = false } = Astro.props
+const eyebrowColor = accent ? "text-[#007f73]" : "text-[#666]"
+---
+
+<header class="border-b border-[#e6e6e6] pt-2.5 pb-8">
+  {
+    eyebrow && (
+      <p
+        class:list={[
+          "mb-2 text-[16px] leading-[1.7] font-bold tracking-[0.02em]",
+          eyebrowColor,
+        ]}
+      >
+        {eyebrow}
+      </p>
+    )
+  }
+  <h1
+    class="text-[32px] leading-normal font-bold tracking-[0.01em] md:text-[45px] md:leading-[1.4] md:tracking-normal"
+  >
+    {title}
+  </h1>
+  {
+    lead && (
+      <p class="mt-3.5 max-w-170 text-[17px] leading-[1.7] font-normal tracking-[0.02em] text-[#666]">
+        {lead}
+      </p>
+    )
+  }
+</header>

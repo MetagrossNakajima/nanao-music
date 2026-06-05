@@ -1,0 +1,67 @@
+---
+import {
+  formatEventDate,
+  formatEventFullDate,
+  formatEventYear,
+} from "../data/formatters"
+import type { Setlist } from "../data/setlistTypes"
+
+type Props = {
+  event: Setlist
+}
+
+const { event } = Astro.props
+const searchableText = [
+  event.title,
+  event.area,
+  event.venue,
+  ...event.songs.map((song) => song.title),
+]
+  .join(" ")
+  .toLowerCase()
+const venueSummary = event.venue ? `${event.area}/${event.venue}` : event.area
+---
+
+<article
+  class="border-b border-[#e6e6e6] bg-white"
+  data-event-row
+  data-event-search={searchableText}
+>
+  <a
+    href={`/events/${event.id}/`}
+    class="block px-2 py-4 no-underline hover:bg-[#fafafa] md:grid md:grid-cols-[118px_minmax(0,1fr)] md:gap-4.5 md:py-4 md:px-3.5"
+  >
+    <div class="md:hidden">
+      <p class="text-[16px] leading-[1.7] font-normal tracking-[0.02em]">
+        <span class="font-bold text-[#1a1a1a]"
+          >{formatEventFullDate(event)}</span
+        >
+        <span class="text-[#666]"> @{venueSummary}</span>
+      </p>
+      <h2 class="mt-1 text-[18px] leading-[1.6] font-bold tracking-[0.02em]">
+        {event.title}
+      </h2>
+    </div>
+
+    <div class="hidden text-[#666] md:block">
+      <span
+        class="block text-[16px] leading-[1.7] font-normal tracking-[0.02em]"
+        >{formatEventYear(event)}</span
+      >
+      <strong
+        class="mt-1 block text-[17px] leading-[1.7] font-bold tracking-[0.02em] text-[#1a1a1a]"
+        >{formatEventDate(event)}</strong
+      >
+    </div>
+    <div class="hidden md:block">
+      <h2 class="text-[18px] leading-[1.6] font-bold tracking-[0.02em]">
+        {event.title}
+      </h2>
+      <p
+        class="mt-1.75 text-[16px] leading-[1.7] font-normal tracking-[0.02em] text-[#666]"
+      >
+        {event.area} / {event.venue || "会場未記録"}
+      </p>
+    </div>
+  </a>
+</article>

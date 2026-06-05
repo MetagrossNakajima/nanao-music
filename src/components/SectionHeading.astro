@@ -1,0 +1,13 @@
+---
+type Props = {
+  as?: "h2" | "h3"
+}
+
+const { as: Tag = "h2" } = Astro.props
+---
+
+<Tag
+  class="flex items-center gap-2 text-[20px] leading-normal font-bold tracking-[0.02em]"
+>
+  <slot />
+</Tag>

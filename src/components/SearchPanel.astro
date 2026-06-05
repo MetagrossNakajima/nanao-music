@@ -1,0 +1,30 @@
+---
+type Props = {
+  total: number
+}
+
+const { total } = Astro.props
+---
+
+<section
+  class="grid items-center gap-3.5 rounded-md border border-[#e6e6e6] bg-[#f7f7f7] p-4 md:grid-cols-[120px_minmax(0,1fr)_auto]"
+  aria-label="公演検索"
+>
+  <label
+    class="text-[16px] leading-[1.7] font-bold tracking-[0.02em]"
+    for="event-search">公演検索</label
+  >
+  <input
+    class="min-h-11 w-full rounded-md border border-[#d6d6d6] bg-white px-3 text-[17px] leading-[1.7] tracking-[0.02em] text-[#1a1a1a] outline-none focus:border-[#007f73] focus:ring-3 focus:ring-[#007f73]/15"
+    id="event-search"
+    type="search"
+    placeholder="曲名・会場名で検索"
+    autocomplete="off"
+  />
+  <p
+    class="text-[14px] leading-[1.3] font-normal tracking-normal whitespace-normal text-[#666] md:whitespace-nowrap"
+    id="result-count"
+  >
+    {total}公演を表示中
+  </p>
+</section>

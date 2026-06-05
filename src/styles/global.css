@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+	--font-sans: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+	--font-mono: "Noto Sans Mono", monospace;
+}
+
+@layer base {
+	* {
+		box-sizing: border-box;
+	}
+
+	html,
+	body {
+		@apply m-0 min-h-full w-full bg-white font-sans text-[17px] leading-[1.7] font-normal tracking-[0.02em] text-[#1a1a1a] antialiased;
+		text-rendering: optimizeLegibility;
+	}
+
+	a {
+		@apply text-inherit;
+	}
+
+	button,
+	input {
+		font: inherit;
+	}
+
+	code,
+	pre {
+		@apply font-mono;
+	}
+}

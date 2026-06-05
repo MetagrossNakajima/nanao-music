@@ -1,0 +1,30 @@
+---
+type IconName = "calendar" | "map-pin"
+
+type Props = {
+  name: IconName
+  class?: string
+}
+
+const { name, class: className = "size-5" } = Astro.props
+
+const paths: Record<IconName, string> = {
+  calendar:
+    "M8 2v3m8-3v3M4 9h16M6 4h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm2 9h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01M16 17h.01",
+  "map-pin":
+    "M12 22s7-5.1 7-12a7 7 0 1 0-14 0c0 6.9 7 12 7 12Zm0-9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z",
+}
+---
+
+<svg
+  class={className}
+  aria-hidden="true"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  viewBox="0 0 24 24"
+>
+  <path d={paths[name]}></path>
+</svg>
