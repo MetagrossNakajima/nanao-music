@@ -1,6 +1,6 @@
 # ナナヲアカリ コール セトリまとめ
 
-Astro と Tailwind CSS で作ったセトリまとめサイトです。
+Astro と Tailwind CSS で作ったセトリ・コールまとめサイトです。
 
 ## Project Structure
 

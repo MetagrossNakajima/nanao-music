@@ -11,10 +11,13 @@ const events = [...(setlists as Setlist[])].sort((a, b) => {
   const bValue = b.date.year * 10000 + b.date.month * 100 + b.date.day
   return bValue - aValue
 })
+
+const siteDescription =
+  "ナナヲアカリのライブ・イベントのセトリやコール情報を検索できるまとめサイトです。"
 ---
 
-<Layout>
-  <main class="mx-auto w-[min(960px,calc(100%-32px))] py-10 pb-[72px]">
+<Layout title="ナナヲアカリ コール セトリまとめ" description={siteDescription}>
+  <main class="mx-auto w-[min(960px,calc(100%-32px))] py-10 pb-18">
     <PageHeader
       title="ナナヲアカリ コール セトリまとめ"
       lead="曲名・会場名で公演を検索できます。"

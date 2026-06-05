@@ -16,9 +16,29 @@ export function getStaticPaths() {
 }
 
 const { setlist } = Astro.props as { setlist: Setlist }
+const { year, month, day } = setlist.date
+const isoDate = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
+const venueLabel = setlist.venue || "会場未記録"
+const pageDescription = `${formatEventFullDate(setlist)}に${venueLabel}で開催された「${setlist.title}」のセトリまとめです。`
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicEvent",
+  name: setlist.title,
+  startDate: isoDate,
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  location: {
+    "@type": "Place",
+    name: venueLabel,
+    address: setlist.area,
+  },
+  performer: {
+    "@type": "MusicGroup",
+    name: "ナナヲアカリ",
+  },
+}
 ---
 
-<Layout>
+<Layout title={setlist.title} description={pageDescription} type="article" jsonLd={jsonLd}>
   <main class="mx-auto w-[min(760px,calc(100%-32px))] py-8 pb-18">
     <nav>
       <a
