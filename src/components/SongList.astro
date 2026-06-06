@@ -1,7 +1,7 @@
 ---
-import type { Setlist } from "../data/setlistTypes"
-import { resolveSong } from "../data/songResolver"
-import { resolveSongPagePath } from "../data/songPagePaths"
+import type { Setlist } from "../data/setlists/types"
+import { resolveSong } from "../data/songs/resolver"
+import { resolveCallPagePath } from "../data/calls/paths"
 import Badge from "./Badge.astro"
 
 type Props = {
@@ -21,7 +21,8 @@ const tagLabels = {
       setlist.songs.map((song) => {
         const songNumber = song.position
         const songInfo = resolveSong(song.songId)
-        const songHref = resolveSongPagePath(song.songId)
+        const songHref = resolveCallPagePath(song.songId)
+        const previewUrl = songInfo.audio?.appleMusic?.previewUrl
 
         return (
           <li class="grid items-center gap-2 border-b border-[#e6e6e6] bg-white px-1 py-3.5 grid-cols-[24px_1fr_60px]">
@@ -30,7 +31,10 @@ const tagLabels = {
             </span>
             <span class="text-[17px] leading-[1.7] font-bold tracking-[0.02em]">
               {songHref ? (
-                <a class="text-[#007f73] no-underline hover:underline" href={songHref}>
+                <a
+                  class="text-[#007f73] no-underline hover:underline"
+                  href={songHref}
+                >
                   {songInfo.title}
                 </a>
               ) : (
@@ -44,13 +48,13 @@ const tagLabels = {
                 </span>
               )}
             </span>
-            {songInfo.itunesPreviewUrl && (
+            {previewUrl && (
               <button
                 type="button"
                 class="inline-flex w-15 items-center justify-center rounded border border-[#007f73] bg-white px-2 py-1.5 text-[15px] leading-[1.4] font-bold tracking-[0.02em] text-[#007f73] hover:bg-[#f0fbf8]"
                 aria-label={`${songInfo.title}を試聴`}
                 data-audio-preview
-                data-audio-src={songInfo.itunesPreviewUrl}
+                data-audio-src={previewUrl}
                 data-song-title={songInfo.title}
               >
                 試聴

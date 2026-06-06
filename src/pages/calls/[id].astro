@@ -1,0 +1,59 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import CallCategoryList from "../../components/CallCategoryList.astro"
+import PageHeader from "../../components/PageHeader.astro"
+import {
+  listCallGuideIds,
+  resolveSong,
+  resolveCallGuide,
+} from "../../data/songs/resolver"
+import type { Song } from "../../data/types"
+import type { CallSection } from "../../data/types"
+
+type Props = {
+  song: Song
+  sections: CallSection[]
+}
+
+export function getStaticPaths() {
+  return listCallGuideIds().map((id) => ({
+    params: { id },
+    props: {
+      song: resolveSong(id),
+      sections: resolveCallGuide(id).sections,
+    },
+  }))
+}
+
+const { song, sections } = Astro.props as Props
+const pageDescription = `${song.title}のコールまとめです。`
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicRecording",
+  name: song.title,
+  byArtist: {
+    "@type": "MusicGroup",
+    name: "ナナヲアカリ",
+  },
+}
+---
+
+<Layout
+  title={`${song.title} コールまとめ`}
+  description={pageDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <main class="mx-auto w-[min(760px,calc(100%-32px))] py-8 pb-18">
+    <nav>
+      <a
+        class="text-[17px] leading-[1.7] font-bold tracking-[0.02em] text-[#007f73] no-underline hover:underline"
+        href="/">公演一覧へ戻る</a
+      >
+    </nav>
+
+    <PageHeader eyebrow="コールまとめ" title={song.title} />
+
+    <CallCategoryList sections={sections} />
+  </main>
+</Layout>

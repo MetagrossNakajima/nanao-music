@@ -1,38 +1,35 @@
 ---
-import type { CallCategory } from "../data/callTypes"
+import type { CallSection } from "../data/types"
 import SectionHeading from "./SectionHeading.astro"
 
 type Props = {
-  categories: CallCategory[]
+  sections: CallSection[]
 }
 
-const { categories } = Astro.props
+const { sections } = Astro.props
 ---
 
-<section class="mt-6" aria-label="コールカテゴリー">
+<section class="mt-6" aria-label="コール">
   <div class="mb-4">
-    <SectionHeading>コールカテゴリー</SectionHeading>
+    <SectionHeading>コール</SectionHeading>
   </div>
-  <div class="grid gap-5 border-t border-[#e6e6e6]">
+  <div class="grid border-t border-[#e6e6e6]">
     {
-      categories.map((category) => (
-        <section
-          id={category.id}
-          class="border-b border-[#e6e6e6] bg-white py-4"
-        >
-          <h2 class="text-[20px] leading-normal font-bold tracking-[0.02em]">
-            {category.title}
-          </h2>
-          {category.items.length > 0 ? (
+      sections.map((section) => (
+        <section class="border-b border-[#e6e6e6] bg-white py-7">
+          <h3 class="text-[18px] leading-normal font-bold tracking-[0.02em]">
+            {section.label}
+          </h3>
+          {section.items.length > 0 ? (
             <ul class="mt-3 grid list-none gap-2 p-0">
-              {category.items.map((item) => (
+              {section.items.map((item) => (
                 <li class="text-[17px] leading-[1.7] font-normal tracking-[0.02em]">
-                  {item}
+                  {item.text}
                 </li>
               ))}
             </ul>
           ) : (
-            <p class="mt-2 text-[16px] leading-[1.7] font-normal tracking-[0.02em] text-[#777]">
+            <p class="mt-2 text-[17px] leading-[1.7] font-normal tracking-[0.02em] text-[#777]">
               特になし
             </p>
           )}

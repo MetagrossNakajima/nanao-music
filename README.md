@@ -16,10 +16,13 @@ Astro と Tailwind CSS で作ったセトリ・コールまとめサイトです
 │   │   ├── EventListItem.astro
 │   │   └── SongList.astro
 │   ├── data
-│   │   └── setlists.generated.json
+│   │   ├── calls
+│   │   ├── setlists
+│   │   └── songs
 │   ├── layouts
 │   │   └── Layout.astro
 │   ├── pages
+│   │   ├── calls/[id].astro
 │   │   ├── index.astro
 │   │   └── events/[id].astro
 │   └── styles
@@ -31,9 +34,9 @@ Astro と Tailwind CSS で作ったセトリ・コールまとめサイトです
 
 すべてリポジトリルートで実行します。
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
+| Command                | Action                                           |
+| :--------------------- | :----------------------------------------------- |
+| `pnpm install`         | Installs dependencies                            |
 | `pnpm dev`             | Starts local dev server at `localhost:4321`      |
 | `pnpm build`           | Build your production site to `./dist/`          |
 | `pnpm preview`         | Preview your build locally, before deploying     |

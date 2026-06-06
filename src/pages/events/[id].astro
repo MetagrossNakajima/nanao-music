@@ -4,12 +4,12 @@ import Icon from "../../components/Icon.astro"
 import PageHeader from "../../components/PageHeader.astro"
 import SectionHeading from "../../components/SectionHeading.astro"
 import SongList from "../../components/SongList.astro"
-import setlists from "../../data/setlists.generated.json"
-import { formatEventFullDate } from "../../data/formatters"
-import type { Setlist } from "../../data/setlistTypes"
+import setlists from "../../data/setlists/setlists"
+import { formatEventFullDate } from "../../data/setlists/formatters"
+import type { Setlist } from "../../data/setlists/types"
 
 export function getStaticPaths() {
-  return (setlists as Setlist[]).map((setlist) => ({
+  return setlists.map((setlist) => ({
     params: { id: String(setlist.id) },
     props: { setlist },
   }))
@@ -38,7 +38,12 @@ const jsonLd = {
 }
 ---
 
-<Layout title={setlist.title} description={pageDescription} type="article" jsonLd={jsonLd}>
+<Layout
+  title={setlist.title}
+  description={pageDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
   <main class="mx-auto w-[min(760px,calc(100%-32px))] py-8 pb-18">
     <nav>
       <a

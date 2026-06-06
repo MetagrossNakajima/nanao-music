@@ -3,10 +3,9 @@ import Layout from "../layouts/Layout.astro"
 import EventListItem from "../components/EventListItem.astro"
 import PageHeader from "../components/PageHeader.astro"
 import SearchPanel from "../components/SearchPanel.astro"
-import setlists from "../data/setlists.generated.json"
-import type { Setlist } from "../data/setlistTypes"
+import setlists from "../data/setlists/setlists"
 
-const events = [...(setlists as Setlist[])].sort((a, b) => {
+const events = [...setlists].sort((a, b) => {
   const aValue = a.date.year * 10000 + a.date.month * 100 + a.date.day
   const bValue = b.date.year * 10000 + b.date.month * 100 + b.date.day
   return bValue - aValue
